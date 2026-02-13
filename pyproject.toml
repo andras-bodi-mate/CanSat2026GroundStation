@@ -1,0 +1,22 @@
+[project]
+name = "cansatgroundstation"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.13"
+readme = "README.md"
+dependencies = [
+    "pyqt6>=6.10.2",
+    "pyqtgraph>=0.14.0",
+    "pyserial>=3.5",
+    "wakepy>=0.10.2.post1",
+]
+
+[dependency-groups]
+dev = []
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+name = "pypi"
+url = "https://pypi.org/simple"
