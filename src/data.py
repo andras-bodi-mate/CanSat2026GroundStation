@@ -1,5 +1,8 @@
 from time import time
+from pathlib import Path
 import re
+
+from core import Core
 
 class MessageType:
     PrimaryData = 0
@@ -87,18 +90,23 @@ class Packet:
     def __repr__(self):
         return f"({self.toString()})"
 
-recievedPackets: list[Packet] = []
 
 class PacketHandler:
+    recievedPackets: list[Packet] = []
+    recievedPacketsFilePath = Core.getPath("out/recievedPackets.txt")
+
     def __init__(self):
-        self.recievedPacketsFile = open("out\\recievedPackets.txt", "a")
+        if not PacketHandler.recievedPacketsFilePath.exists():
+            PacketHandler.recievedPacketsFilePath.parent.mkdir(parents = True, exist_ok = True)
+            PacketHandler.recievedPacketsFilePath.touch()
+        self.recievedPacketsFile = open(PacketHandler.recievedPacketsFilePath, "a")
 
     def close(self):
         self.recievedPacketsFile.close()
         print("File 'recievedPackets.txt' successfully closed.")
 
     def storeNewPacket(self, packet):
-        recievedPackets.append(packet)
+        PacketHandler.recievedPackets.append(packet)
     
     def saveNewPacketToFile(self, packet):
         self.recievedPacketsFile.write(f"{packet.toString()}\n")
